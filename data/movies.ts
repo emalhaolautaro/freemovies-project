@@ -7,6 +7,7 @@ export interface Movie {
   director: string
   description: string
   videoUrl?: string // URL del video para reproducir
+  posterUrl?: string // URL del poster de la película
 }
 
 export const movies: Movie[] = [
@@ -19,6 +20,7 @@ export const movies: Movie[] = [
     director: "F.W. Murnau",
     description: "El clásico vampiro alemán que definió el género de terror.",
     videoUrl: "https://archive.org/embed/nosferatu_201508",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/lsG4UFjL8SGKaH0Nz8vgFVJGifM.jpg"
   },
   {
     id: 2,
@@ -28,7 +30,8 @@ export const movies: Movie[] = [
     genre: "Sci-Fi",
     director: "Fritz Lang",
     description: "Obra maestra del cine mudo sobre una sociedad futurista.",
-    videoUrl: "https://www.youtube.com/watch?v=ZSExdX0tds4",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 3,
@@ -38,7 +41,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Robert Wiene",
     description: "Pionero del expresionismo alemán en el cine.",
-    videoUrl: "https://archive.org/details/TheCabinetOfDr.Caligari1920_201611",
+    videoUrl: "https://archive.org/embed/TheCabinetOfDr.Caligari1920FULLMOVIE",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/cXSzcOF6RINcXrExn0nR4ExFoR3.jpg",
   },
   {
     id: 4,
@@ -49,6 +53,7 @@ export const movies: Movie[] = [
     director: "George A. Romero",
     description: "La película que creó el género zombie moderno.",
     videoUrl: "https://archive.org/embed/NightOfTheLivingDead-MPEG",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/rb2NWyb008u1EcKCOyXs2Nmj0ra.jpg",
   },
   {
     id: 5,
@@ -58,7 +63,8 @@ export const movies: Movie[] = [
     genre: "Sci-Fi",
     director: "Ed Wood",
     description: "Famosa película B de ciencia ficción.",
-    videoUrl: "https://www.youtube.com/watch?v=_WQfZYacEAw",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 6,
@@ -68,7 +74,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Rupert Julian",
     description: "El clásico del terror con Lon Chaney.",
-    videoUrl: "https://archive.org/details/ThePhantomOfTheOpera1925_201611",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 7,
@@ -78,7 +85,8 @@ export const movies: Movie[] = [
     genre: "Drama",
     director: "Sergei Eisenstein",
     description: "Obra maestra del montaje cinematográfico soviético.",
-    videoUrl: "https://www.youtube.com/watch?v=Ps-v-kZzfec",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 8,
@@ -88,7 +96,8 @@ export const movies: Movie[] = [
     genre: "Drama",
     director: "D.W. Griffith",
     description: "Película histórica controvertida pero técnicamente innovadora.",
-    videoUrl: "https://archive.org/details/dw_griffith_birth_of_a_nation",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 9,
@@ -98,7 +107,8 @@ export const movies: Movie[] = [
     genre: "Drama",
     director: "D.W. Griffith",
     description: "Épica ambiciosa sobre la intolerancia a través de la historia.",
-    videoUrl: "https://archive.org/details/Intolerance1916_201611",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 10,
@@ -108,7 +118,8 @@ export const movies: Movie[] = [
     genre: "Western",
     director: "Edwin S. Porter",
     description: "Una de las primeras películas narrativas del cine.",
-    videoUrl: "https://www.youtube.com/watch?v=BZR3cW4_2OU",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 11,
@@ -118,7 +129,8 @@ export const movies: Movie[] = [
     genre: "Sci-Fi",
     director: "Georges Méliès",
     description: "Pionera del cine de ciencia ficción y efectos especiales.",
-    videoUrl: "https://www.youtube.com/watch?v=_FrdVdKlxUk",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 12,
@@ -128,7 +140,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Clásica comedia de Chaplin en Alaska.",
-    videoUrl: "https://archive.org/details/TheGoldRush1925_201611",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 13,
@@ -138,7 +151,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Buster Keaton",
     description: "Obra maestra de Buster Keaton sobre cine dentro del cine.",
-    videoUrl: "https://www.youtube.com/watch?v=HPSK4zZtzLI",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 14,
@@ -148,7 +162,8 @@ export const movies: Movie[] = [
     genre: "Action",
     director: "Buster Keaton",
     description: "Épica de acción de Keaton ambientada en la Guerra Civil.",
-    videoUrl: "https://archive.org/details/TheGeneral1926_201611",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 15,
@@ -158,7 +173,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Fred C. Newmeyer",
     description: "Harold Lloyd en su famosa escena colgando del reloj.",
-    videoUrl: "https://www.youtube.com/watch?v=ShiShrR_nh8",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 16,
@@ -168,7 +184,8 @@ export const movies: Movie[] = [
     genre: "Documentary",
     director: "Dziga Vertov",
     description: "Documental experimental soviético sobre la vida urbana.",
-    videoUrl: "https://archive.org/details/ManWithAMovieCamera1929",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 17,
@@ -178,7 +195,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Benjamin Christensen",
     description: "Documental-ficción sobre brujería y superstición.",
-    videoUrl: "https://www.youtube.com/watch?v=VgIU_jgJbQo",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 18,
@@ -188,7 +206,8 @@ export const movies: Movie[] = [
     genre: "Fantasy",
     director: "Lotte Reiniger",
     description: "Primera película de animación de largometraje.",
-    videoUrl: "https://archive.org/details/AdventuresOfPrinceAchmed1926",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 19,
@@ -198,7 +217,8 @@ export const movies: Movie[] = [
     genre: "Drama",
     director: "Carl Theodor Dreyer",
     description: "Obra maestra del cine mudo sobre Juana de Arco.",
-    videoUrl: "https://www.youtube.com/watch?v=3pBrBXJ_p8g",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 20,
@@ -208,7 +228,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Tierna comedia de Chaplin sobre un vagabundo y un niño.",
-    videoUrl: "https://archive.org/details/TheKid1921",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 21,
@@ -218,7 +239,8 @@ export const movies: Movie[] = [
     genre: "Romance",
     director: "F.W. Murnau",
     description: "Poema visual sobre amor y redención.",
-    videoUrl: "https://www.youtube.com/watch?v=8lAhqFEDQHs",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 22,
@@ -228,7 +250,8 @@ export const movies: Movie[] = [
     genre: "Drama",
     director: "F.W. Murnau",
     description: "Drama mudo sobre la dignidad humana.",
-    videoUrl: "https://archive.org/details/TheLastLaugh1924",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 23,
@@ -238,7 +261,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Obra maestra romántica de Chaplin.",
-    videoUrl: "https://www.youtube.com/watch?v=ozhPS_6Az1g",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 24,
@@ -248,7 +272,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Sátira de Chaplin sobre la industrialización.",
-    videoUrl: "https://www.youtube.com/watch?v=DfGs2Y5WJ14",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 25,
@@ -258,7 +283,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Sátira política de Chaplin contra el fascismo.",
-    videoUrl: "https://www.youtube.com/watch?v=J7GY1Xg6X20",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 26,
@@ -268,7 +294,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Howard Hawks",
     description: "Comedia screwball sobre periodismo.",
-    videoUrl: "https://archive.org/details/HisGirlFriday1940",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 27,
@@ -278,7 +305,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Los inicios del icónico personaje de Chaplin.",
-    videoUrl: "https://www.youtube.com/watch?v=PSKJrgGqx_E",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 28,
@@ -288,7 +316,8 @@ export const movies: Movie[] = [
     genre: "Fantasy",
     director: "Walt Disney",
     description: "Debut sonoro de Mickey Mouse.",
-    videoUrl: "https://www.youtube.com/watch?v=BBgghnQF6E4",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 29,
@@ -298,7 +327,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Paul Wegener",
     description: "Leyenda del golem de Praga en el cine expresionista.",
-    videoUrl: "https://archive.org/details/TheGolem1920",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 30,
@@ -308,7 +338,8 @@ export const movies: Movie[] = [
     genre: "Comedy",
     director: "Charlie Chaplin",
     description: "Cortometraje de Chaplin sobre inmigración.",
-    videoUrl: "https://www.youtube.com/watch?v=lKsmACWaAqg",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 31,
@@ -318,7 +349,8 @@ export const movies: Movie[] = [
     genre: "Adventure",
     director: "Raoul Walsh",
     description: "Épica aventura de fantasía con Douglas Fairbanks.",
-    videoUrl: "https://archive.org/details/TheThiefOfBagdad1924",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 32,
@@ -328,7 +360,8 @@ export const movies: Movie[] = [
     genre: "Thriller",
     director: "John S. Robertson",
     description: "Adaptación clásica de la novela de Stevenson.",
-    videoUrl: "https://www.youtube.com/watch?v=DUznvhP-Kuc",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 33,
@@ -338,7 +371,8 @@ export const movies: Movie[] = [
     genre: "Mystery",
     director: "Paul Leni",
     description: "Misterio de casa embrujada del cine mudo.",
-    videoUrl: "https://archive.org/details/TheCatAndTheCanary1927",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 34,
@@ -348,7 +382,8 @@ export const movies: Movie[] = [
     genre: "Adventure",
     director: "Allan Dwan",
     description: "Aventuras épicas de Robin Hood con Douglas Fairbanks.",
-    videoUrl: "https://www.youtube.com/watch?v=Q8Ny2R3dxNE",
+    //videoUrl: "",
+    //posterUrl: "",
   },
   {
     id: 35,
@@ -358,7 +393,8 @@ export const movies: Movie[] = [
     genre: "Adventure",
     director: "Fred Niblo",
     description: "Las aventuras del enmascarado justiciero.",
-    videoUrl: "https://archive.org/details/TheMarkOfZorro1920",
+    //videoUrl: "",
+    //posterUrl: "",
   },
 ]
 

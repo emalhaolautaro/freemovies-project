@@ -18,7 +18,6 @@ export default async function MoviePage({ params }: MoviePageProps) {
     notFound()
   }
 
-  // Función getGenreColor (misma que en MovieCard)
   const getGenreColor = (genre: string) => {
     const colors = {
       Horror: "from-red-600 via-red-500 to-red-700",
@@ -39,7 +38,6 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Header */}
       <header className="relative z-10 px-8 h-20 flex items-center justify-between">
         <Link href="/catalog" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
           <ArrowLeft className="h-5 w-5 text-white" />
@@ -52,42 +50,44 @@ export default async function MoviePage({ params }: MoviePageProps) {
         </div>
       </header>
 
-      {/* Contenido principal */}
       <main className="px-8 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Hero section con información */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            {/* Poster colorido */}
             <div className="lg:col-span-1">
               <div className="aspect-[3/4] rounded-2xl overflow-hidden">
-                <div
-                  className={`w-full h-full bg-gradient-to-br ${getGenreColor(movie.genre)} flex flex-col items-center justify-center text-center p-8 relative overflow-hidden`}
-                >
-                  {/* Patrón decorativo */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-6 left-6 w-8 h-8 border-2 border-white rounded-full"></div>
-                    <div className="absolute top-12 right-8 w-6 h-6 border border-white rounded-full"></div>
-                    <div className="absolute bottom-8 left-8 w-10 h-10 border border-white rounded-full"></div>
-                    <div className="absolute bottom-6 right-6 w-4 h-4 bg-white rounded-full"></div>
-                    <div className="absolute top-0 left-1/2 w-px h-full bg-white opacity-10"></div>
-                    <div className="absolute left-0 top-1/2 w-full h-px bg-white opacity-10"></div>
-                  </div>
+                {movie.posterUrl ? (
+                  <img
+                    src={movie.posterUrl}
+                    alt={`Póster de ${movie.title}`}
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                ) : (
+                  <div
+                    className={`w-full h-full bg-gradient-to-br ${getGenreColor(movie.genre)} flex flex-col items-center justify-center text-center p-8 relative overflow-hidden`}
+                  >
+                    <div className="absolute inset-0 opacity-20">
+                      <div className="absolute top-6 left-6 w-8 h-8 border-2 border-white rounded-full"></div>
+                      <div className="absolute top-12 right-8 w-6 h-6 border border-white rounded-full"></div>
+                      <div className="absolute bottom-8 left-8 w-10 h-10 border border-white rounded-full"></div>
+                      <div className="absolute bottom-6 right-6 w-4 h-4 bg-white rounded-full"></div>
+                      <div className="absolute top-0 left-1/2 w-px h-full bg-white opacity-10"></div>
+                      <div className="absolute left-0 top-1/2 w-full h-px bg-white opacity-10"></div>
+                    </div>
 
-                  {/* Contenido del poster */}
-                  <div className="mb-6 p-6 bg-white/20 rounded-full border-2 border-white/30">
-                    <Film className="h-12 w-12 text-white" />
-                  </div>
-                  <div className="text-white text-2xl font-bold mb-3 leading-tight">{movie.title}</div>
-                  <div className="text-white/80 text-lg mb-2">{movie.year}</div>
-                  <div className="text-white/60 text-sm mb-4">{movie.genre}</div>
-                  <div className="text-white/50 text-sm">Dir. {movie.director}</div>
+                    <div className="mb-6 p-6 bg-white/20 rounded-full border-2 border-white/30">
+                      <Film className="h-12 w-12 text-white" />
+                    </div>
+                    <div className="text-white text-2xl font-bold mb-3 leading-tight">{movie.title}</div>
+                    <div className="text-white/80 text-lg mb-2">{movie.year}</div>
+                    <div className="text-white/60 text-sm mb-4">{movie.genre}</div>
+                    <div className="text-white/50 text-sm">Dir. {movie.director}</div>
 
-                  {/* Badge de dominio público */}
-                  <div className="absolute top-3 left-3 bg-green-600/80 px-2 py-1 rounded text-xs text-white font-medium flex items-center space-x-1">
-                    <Globe className="h-3 w-3" />
-                    <span>Dominio Público</span>
+                    <div className="absolute top-3 left-3 bg-green-600/80 px-2 py-1 rounded text-xs text-white font-medium flex items-center space-x-1">
+                      <Globe className="h-3 w-3" />
+                      <span>Dominio Público</span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
