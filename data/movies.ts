@@ -19,7 +19,7 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "F.W. Murnau",
     description: "El clásico vampiro alemán que definió el género de terror.",
-    videoUrl: "https://archive.org/embed/nosferatu_201508",
+    videoUrl: "https://www.youtube.com/embed/xbT1vrsNUT0?si=lA-Ug_PZQrMCgfmO",
     posterUrl: "https://www.themoviedb.org/t/p/w1280/lsG4UFjL8SGKaH0Nz8vgFVJGifM.jpg"
   },
   {
@@ -41,7 +41,7 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Robert Wiene",
     description: "Pionero del expresionismo alemán en el cine.",
-    videoUrl: "https://archive.org/embed/TheCabinetOfDr.Caligari1920FULLMOVIE",
+    videoUrl: "https://www.youtube.com/embed/gEpAFK8mLuI?si=lYLiqDC6Aam2Gmfy",
     posterUrl: "https://www.themoviedb.org/t/p/w1280/cXSzcOF6RINcXrExn0nR4ExFoR3.jpg",
   },
   {
@@ -52,7 +52,7 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "George A. Romero",
     description: "La película que creó el género zombie moderno.",
-    videoUrl: "https://archive.org/embed/NightOfTheLivingDead-MPEG",
+    videoUrl: "https://www.youtube.com/embed/l-FGlw6jWgQ?si=9WPA6YmovzjlQuxS",
     posterUrl: "https://www.themoviedb.org/t/p/w1280/rb2NWyb008u1EcKCOyXs2Nmj0ra.jpg",
   },
   {
@@ -74,8 +74,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Rupert Julian",
     description: "El clásico del terror con Lon Chaney.",
-    //videoUrl: "",
-    //posterUrl: "",
+    videoUrl: "https://www.youtube.com/embed/uA2pvD-hx9Y?si=r-AymI_4ckjXOVkC",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/bpJKYjCu64wrI40LTAEcKve4bKD.jpg",
   },
   {
     id: 7,
@@ -195,8 +195,8 @@ export const movies: Movie[] = [
     genre: "Horror",
     director: "Benjamin Christensen",
     description: "Documental-ficción sobre brujería y superstición.",
-    //videoUrl: "",
-    //posterUrl: "",
+    videoUrl: "https://archive.org/embed/Haxan_201510",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/1ZILGNPote7d7C8UNCISTdtELyW.jpg",
   },
   {
     id: 18,
@@ -395,6 +395,39 @@ export const movies: Movie[] = [
     description: "Las aventuras del enmascarado justiciero.",
     //videoUrl: "",
     //posterUrl: "",
+  },
+  {
+    id: 36,
+    title: "A star is born",
+    year: 1937,
+    duration: "1h 51m",
+    genre: "Romance",
+    director: "William A. Wellman",
+    description: "Un actor alcohólico ayuda a una joven a alcanzar la fama, pero su carrera decae.",
+    videoUrl: "https://www.youtube.com/embed/NFvCgvEUYVk?si=EX8d72ordbLJ5nTg",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/dZ2G4EPlIAWZzzFukZPmONRJEs8.jpg",
+  },
+  {
+    id: 37,
+    title: "The little princess",
+    year: 1939,
+    duration: "1h 33m",
+    genre: "Drama",
+    director: "Walter Lang",
+    description: "Una niña rica que cae en desgracia sigue creyendo en la bondad y el amor.",
+    videoUrl: "https://www.youtube.com/embed/V9JSRHVuLBE?si=ehHwt9LFRax-wzr3",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/yogrkvZrwQs9uV5s01RcUh1qred.jpg",
+  },
+  {
+    id: 38,
+    title: "The count of Monte Cristo",
+    year: 1934,
+    duration: "1h 53m",
+    genre: "Adventure",
+    director: "Rowland V. Lee",
+    description: "Tras pasar 13 años en prisión injustamente encarcelado, Edmundo Dantés logra fugar para maquinar una diabólica venganza contra sus enemigos.",
+    videoUrl: "https://www.youtube.com/embed/V8N0WDmjLU4?si=TK4dOzoBVFxpaw2_",
+    posterUrl: "https://www.themoviedb.org/t/p/w1280/oq4x1Bobtuc5890Xw7Te9dLW47H.jpg",
   },
 ]
 
