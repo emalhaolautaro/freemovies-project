@@ -7,12 +7,12 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "FreeMovies - Streaming de Cine Clásico",
-  description: "Descubre miles de películas clásicas de dominio público. Streaming gratuito de la historia del cine.",
+  description: "Descubre películas clásicas de dominio público. Streaming gratuito de la historia del cine.",
   keywords: "cine clásico, películas gratis, dominio público, streaming, películas antiguas",
-  authors: [{ name: "FreeMovies" }],
+  authors: [{ name: "Lautaro" }],
   openGraph: {
     title: "FreeMovies - Streaming de Cine Clásico",
-    description: "Descubre miles de películas clásicas de dominio público",
+    description: "Descubre películas clásicas de dominio público",
     type: "website",
     locale: "es_ES",
   },

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://publicdomainmovies.vercel.app
+
+# Sitemaps
+Sitemap: https://publicdomainmovies.vercel.app/sitemap.xml

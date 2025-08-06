@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Play, Calendar, Clock } from "lucide-react";
+import { useState } from "react";
 
 type Movie = {
   id: string;
@@ -35,8 +36,14 @@ function getGenreColor(genre: string) {
 }
 
 export default function MovieCard({ movie }: MovieCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const cardContent = (
-    <div className="group cursor-pointer transform transition-all duration-300 hover:scale-105">
+    <div 
+      className="cursor-pointer transform transition-all duration-300 hover:scale-105"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/10 transition-all duration-300">
         <div className="relative aspect-[3/4] overflow-hidden bg-gray-800">
           {movie.posterUrl ? (
@@ -55,13 +62,18 @@ export default function MovieCard({ movie }: MovieCardProps) {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          {/* Overlay controlado por estado React */}
+          <div className={`absolute inset-0 bg-black/60 transition-opacity duration-300 flex items-center justify-center ${
+            isHovered ? 'opacity-100' : 'opacity-0'
+          }`}>
             {movie.videoUrl ? (
-              <div className="bg-white rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                <Play className="h-8 w-8 text-black ml-1" />
+              <div className={`border-2 border-white/70 rounded-full p-3 transition-all duration-300 backdrop-blur-sm hover:bg-white/10 ${
+                isHovered ? 'scale-100' : 'scale-90'
+              }`}>
+                <Play className="h-6 w-6 text-white ml-0.5 fill-white" />
               </div>
             ) : (
-              <div className="bg-yellow-500 text-white px-4 py-2 rounded font-bold text-lg">
+              <div className="text-white/80 text-sm font-medium border border-white/30 px-3 py-1.5 rounded-full backdrop-blur-sm">
                 Próximamente
               </div>
             )}

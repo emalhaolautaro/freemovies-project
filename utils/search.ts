@@ -1,7 +1,33 @@
-// Utilidad para búsqueda difusa y sugerencias
+// Utilidad para búsqueda difusa y sugerencias con validaciones de seguridad
+
+// Función para validar y sanitizar el input
+function validateAndSanitizeQuery(query: string): string | null {
+  // ✅ Verificar que sea string
+  if (typeof query !== 'string') return null
+  
+  // ✅ Limitar longitud (previene ataques DoS)
+  if (query.length > 200) return null
+  
+  // ✅ Remover caracteres peligrosos
+  const sanitized = query
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remover scripts
+    .replace(/[<>]/g, '') // Remover < y >
+    .trim()
+  
+  // ✅ Verificar longitud mínima después de sanitización
+  if (sanitized.length < 1 || sanitized.length > 200) return null
+  
+  return sanitized
+}
 
 // Función para calcular la distancia de Levenshtein (similitud entre strings)
 function levenshteinDistance(str1: string, str2: string): number {
+  // ✅ Validar inputs
+  if (!str1 || !str2) return Infinity
+  
+  // ✅ Limitar procesamiento para strings muy largos (prevenir DoS)
+  if (str1.length > 100 || str2.length > 100) return Infinity
+  
   const matrix = []
 
   // Crear matriz
@@ -44,6 +70,8 @@ function similarity(str1: string, str2: string): number {
 
 // Función para normalizar strings (quitar acentos, espacios extra, etc.)
 function normalizeString(str: string): string {
+  if (!str || typeof str !== 'string') return ''
+  
   return str
     .toLowerCase()
     .normalize("NFD")
@@ -54,16 +82,34 @@ function normalizeString(str: string): string {
 }
 
 // Función principal para encontrar sugerencias
-export function findSuggestion(query: string, titles: string[], threshold = 0.4): string | null {
-  const normalizedQuery = normalizeString(query)
+export function findSuggestion(
+  query: string, 
+  titles: string[], 
+  threshold = 0.4
+): string | null {
+  // ✅ Validar y sanitizar query
+  const sanitizedQuery = validateAndSanitizeQuery(query)
+  if (!sanitizedQuery) return null
+  
+  const normalizedQuery = normalizeString(sanitizedQuery)
 
   if (normalizedQuery.length < 2) return null
+
+  // ✅ Validar array de títulos
+  if (!Array.isArray(titles) || titles.length === 0) return null
+  
+  // ✅ Limitar número de títulos procesados (performance y seguridad)
+  const limitedTitles = titles.slice(0, 10000) // Máximo 10k títulos
 
   let bestMatch = ""
   let bestScore = 0
 
-  titles.forEach((title) => {
+  limitedTitles.forEach((title) => {
+    // ✅ Validar cada título
+    if (!title || typeof title !== 'string') return
+    
     const normalizedTitle = normalizeString(title)
+    if (!normalizedTitle) return
 
     // Calcular similitud
     const score = similarity(normalizedQuery, normalizedTitle)
@@ -72,8 +118,8 @@ export function findSuggestion(query: string, titles: string[], threshold = 0.4)
     const containsScore = normalizedTitle.includes(normalizedQuery) ? 0.8 : 0
 
     // También verificar similitud de palabras individuales
-    const queryWords = normalizedQuery.split(" ")
-    const titleWords = normalizedTitle.split(" ")
+    const queryWords = normalizedQuery.split(" ").filter(word => word.length > 0)
+    const titleWords = normalizedTitle.split(" ").filter(word => word.length > 0)
 
     let wordScore = 0
     queryWords.forEach((queryWord) => {
@@ -98,4 +144,25 @@ export function findSuggestion(query: string, titles: string[], threshold = 0.4)
 export function shouldShowSuggestion(query: string, titles: string[]): boolean {
   const suggestion = findSuggestion(query, titles, 0.3)
   return suggestion !== null && normalizeString(suggestion) !== normalizeString(query)
+}
+
+// ✅ Nueva función para uso en componentes React
+export function safeSearch(query: string, titles: string[]) {
+  try {
+    const suggestion = findSuggestion(query, titles)
+    const shouldShow = shouldShowSuggestion(query, titles)
+    
+    return {
+      suggestion,
+      shouldShow,
+      isValid: suggestion !== null
+    }
+  } catch (error) {
+    console.error('Error in search:', error)
+    return {
+      suggestion: null,
+      shouldShow: false,
+      isValid: false
+    }
+  }
 }
