@@ -62,24 +62,24 @@ export default function StreamingLanding() {
             </Link>
           </div>
 
-      {/* Footer simple coherente */}
-      <footer className="text-center py-8">
-        <p className="text-gray-600 text-sm">FreeMovies 2024</p>
-      </footer>
+          {/* Footer simple coherente */}
+          <footer className="text-center py-8">
+            <p className="text-gray-600 text-sm">FreeMovies 2025</p>
+          </footer>
 
-      {/* Estilos mínimos */}
-      <style jsx>{`        
-        .floating-particle {
-          animation: float 8s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); opacity: 0.1; }
-          50% { transform: translateY(-30px); opacity: 0.3; }
-        }
-      `}</style>
-    </div>
-    </main>
+          {/* Estilos mínimos */}
+          <style jsx>{`        
+            .floating-particle {
+              animation: float 8s ease-in-out infinite;
+            }
+            
+            @keyframes float {
+              0%, 100% { transform: translateY(0px); opacity: 0.1; }
+              50% { transform: translateY(-30px); opacity: 0.3; }
+            }
+          `}</style>
+        </div>
+      </main>
     </div>
   )
 }
