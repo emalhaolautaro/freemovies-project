@@ -1,86 +1,111 @@
-'use client'
-import React, { useState, useEffect } from "react"
-import { Globe, X } from "lucide-react"
+"use client"
 
-export default function ShareButton() {
-  const [showModal, setShowModal] = useState(false)
-  const [url, setUrl] = useState("")
+import React, { useState, useEffect, useRef } from "react"
+import Image from "next/image"
+import { Globe, Facebook, MessageCircle } from "lucide-react"
+
+interface ShareButtonProps {}
+
+export default function ShareButton({}: ShareButtonProps) {
+  const [modalOpen, setModalOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const url = typeof window !== "undefined" ? window.location.href : ""
 
+  // Cerrar modal si clickeás fuera
   useEffect(() => {
-    setUrl(window.location.href)
-  }, [])
+    function onClickOutside(event: MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setModalOpen(false)
+        setCopied(false)
+      }
+    }
+    if (modalOpen) {
+      window.addEventListener("mousedown", onClickOutside)
+    }
+    return () => window.removeEventListener("mousedown", onClickOutside)
+  }, [modalOpen])
 
   const copyToClipboard = () => {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(url).then(() => {
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2500)
-      })
-    } else {
-      const textArea = document.createElement("textarea")
-      textArea.value = url
-      textArea.style.position = "fixed"
-      textArea.style.left = "-999999px"
-      document.body.appendChild(textArea)
-      textArea.focus()
-      textArea.select()
-      document.execCommand("copy")
-      textArea.remove()
+    navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 2500)
-    }
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  // URLs para compartir en redes
+  const socialUrls = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    x: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, // URL compatible con X
+    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
   }
 
   return (
     <>
       <button
-        onClick={() => setShowModal(true)}
-        className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-full border border-gray-800 transition-colors"
+        onClick={() => setModalOpen(true)}
+        className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-full border border-gray-700 transition-colors"
         aria-label="Compartir enlace"
       >
         <Globe className="h-4 w-4 text-gray-300" />
         <span className="text-sm font-medium">Compartir</span>
       </button>
 
-      {showModal && (
-        <>
-          {/* Backdrop */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4">
           <div
-            onClick={() => setShowModal(false)}
-            className="fixed inset-0 bg-black bg-opacity-60 z-40"
-          ></div>
-
-          {/* Modal */}
-          <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
-            <div className="bg-gray-900 rounded-lg shadow-lg max-w-sm w-full p-6 relative">
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-3 right-3 text-gray-400 hover:text-gray-200 transition"
-                aria-label="Cerrar"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <h3 className="text-white text-lg font-semibold mb-4">Compartir enlace</h3>
-
-              <p className="break-words text-gray-300 mb-4 select-all">{url}</p>
-
-              {copied && (
-                <p className="text-green-400 mb-4 font-medium select-none">
-                  Enlace copiado al portapapeles
-                </p>
-              )}
-
+            ref={modalRef}
+            className="bg-gray-900 rounded-xl p-6 w-full max-w-sm text-white shadow-lg"
+          >
+            <h3 className="text-lg font-semibold mb-4">Compartir enlace</h3>
+            <div className="flex items-center space-x-2 mb-4">
+              <input
+                type="text"
+                readOnly
+                value={url}
+                className="flex-1 rounded bg-gray-800 text-sm px-3 py-2 select-all focus:outline-none"
+                onFocus={e => e.target.select()}
+              />
               <button
                 onClick={copyToClipboard}
-                className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-md transition-colors"
+                className="bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded text-xs font-medium transition"
+                aria-label="Copiar enlace"
               >
-                Copiar enlace
+                {copied ? "Copiado" : "Copiar"}
               </button>
             </div>
+
+            <div className="flex space-x-4 justify-center">
+              <a
+                href={socialUrls.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartir en Facebook"
+                className="hover:text-blue-500 transition"
+              >
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a
+                href={socialUrls.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartir en X"
+                className="hover:text-sky-400 transition flex items-center"
+              >
+                <Image src="/x-logo.svg" alt="X logo" width={24} height={24} className="invert-white"/>
+              </a>
+              <a
+                href={socialUrls.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartir en WhatsApp"
+                className="hover:text-green-500 transition"
+              >
+                <MessageCircle className="w-6 h-6" />
+              </a>
+            </div>
           </div>
-        </>
+        </div>
       )}
     </>
   )

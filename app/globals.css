@@ -220,6 +220,15 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+.invert-white {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.invert-white:hover {
+  filter: brightness(0) saturate(100%) invert(70%);
+  cursor: pointer;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
