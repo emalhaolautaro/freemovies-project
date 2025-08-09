@@ -1,11 +1,15 @@
 "use client"
 
+import { useState } from "react"
+
 interface VideoPlayerProps {
   videoUrl: string
   title: string
 }
 
 export default function VideoPlayer({ videoUrl, title }: VideoPlayerProps) {
+  const [loading, setLoading] = useState(true)
+
   // Función para convertir URLs a formato embed
   const getEmbedUrl = (url: string): string => {
     // YouTube
@@ -19,28 +23,18 @@ export default function VideoPlayer({ videoUrl, title }: VideoPlayerProps) {
       return `https://www.youtube.com/embed/${videoId}`
     }
 
-    // Archive.org - múltiples formatos
+    // Archive.org
     if (url.includes("archive.org")) {
-      // Si ya es embed, usarlo directamente
-      if (url.includes("/embed/")) {
-        return url
-      }
-
-      // Si es details, convertir a embed
+      if (url.includes("/embed/")) return url
       if (url.includes("/details/")) {
         const identifier = url.split("details/")[1]?.split("/")[0]?.split("?")[0]
         return `https://archive.org/embed/${identifier}`
       }
-
-      // Si solo tiene el identificador, crear embed
       const parts = url.split("/")
       const identifier = parts[parts.length - 1]?.split("?")[0]
-      if (identifier) {
-        return `https://archive.org/embed/${identifier}`
-      }
+      if (identifier) return `https://archive.org/embed/${identifier}`
     }
 
-    // Para otros sitios, usar directamente
     return url
   }
 
@@ -48,11 +42,15 @@ export default function VideoPlayer({ videoUrl, title }: VideoPlayerProps) {
 
   const handleIframeError = () => {
     console.log("Error loading video, trying alternative URL...")
-    // Podrías implementar URLs alternativas aquí
   }
 
   return (
-    <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
+    <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden flex items-center justify-center">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
+          <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+        </div>
+      )}
       <iframe
         src={embedUrl}
         title={title}
@@ -60,6 +58,7 @@ export default function VideoPlayer({ videoUrl, title }: VideoPlayerProps) {
         allowFullScreen
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         loading="lazy"
+        onLoad={() => setLoading(false)}
         onError={handleIframeError}
       />
     </div>
