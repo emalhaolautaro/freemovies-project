@@ -64,7 +64,7 @@ export default function StreamingLanding() {
 
           {/* Footer simple coherente */}
           <footer className="text-center py-8">
-            <p className="text-gray-600 text-sm">FreeMovies 2025</p>
+            <p className="text-gray-600 text-sm">FreeMovies 2025 - Todos los derechos reservados</p>
           </footer>
 
           {/* Estilos mínimos */}

@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock, Film, Play, Shield, Globe } from "lucide-re
 import { getMovieById } from "@/data/movies"
 import VideoPlayer from "@/components/VideoPlayer"
 import LicenseInfo from "@/components/LicenseInfo"
+import ShareButton from "@/components/ShareButton"
 
 interface MoviePageProps {
   params: Promise<{ id: string }>
@@ -176,6 +177,9 @@ export default async function MoviePage({ params }: MoviePageProps) {
             <div className="mb-6 sm:mb-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Ver película</h2>
               <VideoPlayer videoUrl={movie.videoUrl} title={movie.title} />
+              <div className="mt-4 flex justify-center">
+                <ShareButton />
+              </div>
             </div>
           ) : (
             <div className="mb-6 sm:mb-8 p-6 sm:p-8 bg-gray-900 rounded-2xl text-center">
