@@ -10,6 +10,7 @@ import SearchBar from "@/components/SearchBar"
 import SearchSuggestion from "@/components/SearchSuggestion"
 import NotFoundPage from "@/components/NotFoundPage"
 import { findSuggestion } from "@/utils/search"
+import DiscoverButton from "@/components/DiscoverButton" // Importamos el botón descubrir
 
 export default function CatalogPage() {
   const [selectedGenre, setSelectedGenre] = useState("Todos")
@@ -190,8 +191,17 @@ export default function CatalogPage() {
         </p>
       </div>
 
+      {/* BOTÓN DESCUBRIR: solo si no hay búsqueda */}
+      {!searchQuery && (
+        <div className="flex justify-center mb-6">
+          <DiscoverButton />
+        </div>
+      )}
+
       {/* Filtro de géneros (solo si no hay búsqueda) */}
-      {!searchQuery && <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />}
+      {!searchQuery && (
+        <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
+      )}
 
       {/* Carousels de películas */}
       <main className="py-12 space-y-12">
@@ -213,7 +223,7 @@ export default function CatalogPage() {
               Mostrando {filteredMovies.length} película{filteredMovies.length !== 1 ? "s" : ""}
             </>
           )}{" "}
-          • Todas las películas son de dominio público • FreeMovies 2025
+          • Todas las películas son de dominio público • FreeMovies 2025 • Todos los derechos reservados ©
         </p>
       </footer>
     </div>
