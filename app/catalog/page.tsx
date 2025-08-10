@@ -9,8 +9,9 @@ import GenreFilter from "@/components/GenreFilter"
 import SearchBar from "@/components/SearchBar"
 import SearchSuggestion from "@/components/SearchSuggestion"
 import NotFoundPage from "@/components/NotFoundPage"
+import Footer from "@/components/Footer"
 import { findSuggestion } from "@/utils/search"
-import DiscoverButton from "@/components/DiscoverButton" // Importamos el botón descubrir
+import DiscoverButton from "@/components/DiscoverButton"
 
 export default function CatalogPage() {
   const [selectedGenre, setSelectedGenre] = useState("Todos")
@@ -92,7 +93,7 @@ export default function CatalogPage() {
   // Si hay búsqueda sin resultados pero con sugerencia, mostrar sugerencia
   if (searchQuery.trim() && filteredMovies.length === 0 && suggestion && !showNotFound) {
     return (
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-black flex flex-col">
         {/* Header */}
         <header className="relative z-10 px-8 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
@@ -104,32 +105,38 @@ export default function CatalogPage() {
           </div>
         </header>
 
-        {/* Título y búsqueda */}
-        <div className="px-8 py-12">
-          <h1 className="text-4xl md:text-5xl font-light text-white mb-8 text-center">
-            Catálogo de Películas Clásicas
-          </h1>
-          <div className="mb-8">
-            <SearchBar onSearch={handleSearch} />
+        {/* Contenido principal */}
+        <div className="flex-1">
+          {/* Título y búsqueda */}
+          <div className="px-8 py-12">
+            <h1 className="text-4xl md:text-5xl font-light text-white mb-8 text-center">
+              Catálogo de Películas Clásicas
+            </h1>
+            <div className="mb-8">
+              <SearchBar onSearch={handleSearch} />
+            </div>
+          </div>
+
+          {/* Sugerencia */}
+          <SearchSuggestion
+            originalQuery={searchQuery}
+            suggestedTitle={suggestion}
+            onAcceptSuggestion={handleAcceptSuggestion}
+          />
+
+          {/* Botón para mostrar página de error */}
+          <div className="text-center px-8">
+            <button
+              onClick={() => setShowNotFound(true)}
+              className="text-gray-400 hover:text-white transition-colors text-sm underline"
+            >
+              No, busco exactamente "{searchQuery}"
+            </button>
           </div>
         </div>
 
-        {/* Sugerencia */}
-        <SearchSuggestion
-          originalQuery={searchQuery}
-          suggestedTitle={suggestion}
-          onAcceptSuggestion={handleAcceptSuggestion}
-        />
-
-        {/* Botón para mostrar página de error */}
-        <div className="text-center px-8">
-          <button
-            onClick={() => setShowNotFound(true)}
-            className="text-gray-400 hover:text-white transition-colors text-sm underline"
-          >
-            No, busco exactamente "{searchQuery}"
-          </button>
-        </div>
+        {/* Footer */}
+        <Footer searchQuery={searchQuery} movieCount={filteredMovies.length} />
       </div>
     )
   }
@@ -137,7 +144,7 @@ export default function CatalogPage() {
   // Si hay búsqueda sin resultados y sin sugerencia, mostrar página de error
   if (searchQuery.trim() && filteredMovies.length === 0 && showNotFound) {
     return (
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-black flex flex-col">
         {/* Header */}
         <header className="relative z-10 px-8 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
@@ -149,13 +156,18 @@ export default function CatalogPage() {
           </div>
         </header>
 
-        <NotFoundPage searchQuery={searchQuery} onBackToSearch={handleBackToSearch} />
+        <div className="flex-1">
+          <NotFoundPage searchQuery={searchQuery} onBackToSearch={handleBackToSearch} />
+        </div>
+
+        {/* Footer */}
+        <Footer searchQuery={searchQuery} movieCount={0} />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black flex flex-col">
       {/* Header con navegación */}
       <header className="relative z-10 px-8 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
@@ -168,64 +180,54 @@ export default function CatalogPage() {
         </div>
       </header>
 
-      {/* Título y búsqueda */}
-      <div className="px-8 py-12">
-        <h1 className="text-4xl md:text-5xl font-light text-white mb-8 text-center">Catálogo de Películas Clásicas</h1>
+      {/* Contenido principal */}
+      <div className="flex-1">
+        {/* Título y búsqueda */}
+        <div className="px-8 py-12">
+          <h1 className="text-4xl md:text-5xl font-light text-white mb-8 text-center">Catálogo de Películas Clásicas</h1>
 
-        {/* Barra de búsqueda */}
-        <div className="mb-8">
-          <SearchBar onSearch={handleSearch} />
+          {/* Barra de búsqueda */}
+          <div className="mb-8">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+
+          <p className="text-gray-400 text-lg text-center">
+            {searchQuery ? (
+              <>
+                Resultados para "{searchQuery}" • {filteredMovies.length} película{filteredMovies.length !== 1 ? "s" : ""}
+              </>
+            ) : (
+              <>
+                Descubre joyas del cine de dominio público
+                {selectedGenre !== "Todos" && <span className="ml-2 text-white">• {selectedGenre}</span>}
+              </>
+            )}
+          </p>
         </div>
 
-        <p className="text-gray-400 text-lg text-center">
-          {searchQuery ? (
-            <>
-              Resultados para "{searchQuery}" • {filteredMovies.length} película{filteredMovies.length !== 1 ? "s" : ""}
-            </>
-          ) : (
-            <>
-              Descubre joyas del cine de dominio público
-              {selectedGenre !== "Todos" && <span className="ml-2 text-white">• {selectedGenre}</span>}
-            </>
+        {/* BOTÓN DESCUBRIR: solo si no hay búsqueda */}
+        {!searchQuery && (
+          <div className="flex justify-center mb-6">
+            <DiscoverButton />
+          </div>
+        )}
+
+        {/* Filtro de géneros (solo si no hay búsqueda) */}
+        {!searchQuery && (
+          <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
+        )}
+
+        {/* Carousels de películas */}
+        <main className="py-12 space-y-12">
+          {Object.entries(moviesByGenre).map(
+            ([genreName, genreMovies]) =>
+              genreMovies.length > 0 && <MovieCarousel key={genreName} title={genreName} movies={genreMovies} />,
           )}
-        </p>
+        </main>
       </div>
 
-      {/* BOTÓN DESCUBRIR: solo si no hay búsqueda */}
-      {!searchQuery && (
-        <div className="flex justify-center mb-6">
-          <DiscoverButton />
-        </div>
-      )}
-
-      {/* Filtro de géneros (solo si no hay búsqueda) */}
-      {!searchQuery && (
-        <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
-      )}
-
-      {/* Carousels de películas */}
-      <main className="py-12 space-y-12">
-        {Object.entries(moviesByGenre).map(
-          ([genreName, genreMovies]) =>
-            genreMovies.length > 0 && <MovieCarousel key={genreName} title={genreName} movies={genreMovies} />,
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="text-center py-8 border-t border-gray-800">
-        <p className="text-gray-600 text-sm">
-          {searchQuery ? (
-            <>
-              Mostrando {filteredMovies.length} resultado{filteredMovies.length !== 1 ? "s" : ""} para "{searchQuery}"
-            </>
-          ) : (
-            <>
-              Mostrando {filteredMovies.length} película{filteredMovies.length !== 1 ? "s" : ""}
-            </>
-          )}{" "}
-          • Todas las películas son de dominio público • FreeMovies 2025 • Todos los derechos reservados ©
-        </p>
-      </footer>
+      {/* Footer con botón de donación */}
+      <Footer searchQuery={searchQuery} movieCount={filteredMovies.length} />
     </div>
   )
 }

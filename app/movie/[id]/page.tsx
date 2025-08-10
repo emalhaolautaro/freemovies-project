@@ -5,6 +5,7 @@ import { getMovieById } from "@/data/movies"
 import VideoPlayer from "@/components/VideoPlayer"
 import LicenseInfo from "@/components/LicenseInfo"
 import ShareButton from "@/components/ShareButton"
+import DonationButton from "@/components/DonationButton"
 
 interface MoviePageProps {
   params: Promise<{ id: string }>
@@ -177,8 +178,11 @@ export default async function MoviePage({ params }: MoviePageProps) {
             <div className="mb-6 sm:mb-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Ver película</h2>
               <VideoPlayer videoUrl={movie.videoUrl} title={movie.title} />
-              <div className="mt-4 flex justify-center">
+              
+              {/* Botones de acción - Compartir y Donación */}
+              <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <ShareButton />
+                <DonationButton />
               </div>
             </div>
           ) : (
@@ -186,6 +190,12 @@ export default async function MoviePage({ params }: MoviePageProps) {
               <Film className="h-12 w-12 sm:h-16 sm:w-16 text-gray-600 mx-auto mb-3 sm:mb-4" />
               <h2 className="text-lg sm:text-xl font-semibold text-gray-400 mb-2">Video no disponible</h2>
               <p className="text-gray-500 text-sm sm:text-base">Esta película aún no tiene un enlace de video configurado.</p>
+              
+              {/* Botones de acción también cuando no hay video */}
+              <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <ShareButton />
+                <DonationButton />
+              </div>
             </div>
           )}
 
