@@ -3,7 +3,7 @@ import { Play, Calendar, Clock } from "lucide-react";
 import { useState } from "react";
 
 type Movie = {
-  id: string;
+  id: number;
   title: string;
   year: number;
   duration: string;

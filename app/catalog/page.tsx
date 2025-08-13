@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { getGenres, filterMoviesByGenre, movies } from "@/data/movies"
-import MovieCarousel from "@/components/MovieCarousel"
+import MovieCard from "@/components/MovieCard"
 import GenreFilter from "@/components/GenreFilter"
 import SearchBar from "@/components/SearchBar"
 import SearchSuggestion from "@/components/SearchSuggestion"
@@ -13,10 +13,26 @@ import Footer from "@/components/Footer"
 import { findSuggestion } from "@/utils/search"
 import DiscoverButton from "@/components/DiscoverButton"
 
+// Componente para el indicador de carga
+function LoadingSpinner() {
+  return (
+    <div className="flex justify-center items-center py-8">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      <span className="ml-3 text-gray-400">Cargando más películas...</span>
+    </div>
+  )
+}
+
 export default function CatalogPage() {
   const [selectedGenre, setSelectedGenre] = useState("Todos")
   const [searchQuery, setSearchQuery] = useState("")
   const [showNotFound, setShowNotFound] = useState(false)
+  
+  // Estados para lazy loading
+  const [displayedMoviesCount, setDisplayedMoviesCount] = useState(10)
+  const [isLoading, setIsLoading] = useState(false)
+  const observerRef = useRef<IntersectionObserver | null>(null)
+  const loadingRef = useRef<HTMLDivElement | null>(null)
 
   const genres = getGenres()
 
@@ -39,6 +55,11 @@ export default function CatalogPage() {
     return result
   }, [selectedGenre, searchQuery])
 
+  // Películas que se muestran actualmente (para lazy loading)
+  const displayedMovies = useMemo(() => {
+    return filteredMovies.slice(0, displayedMoviesCount)
+  }, [filteredMovies, displayedMoviesCount])
+
   // Verificar si mostrar sugerencia
   const suggestion = useMemo(() => {
     if (searchQuery.trim() && filteredMovies.length === 0) {
@@ -47,31 +68,51 @@ export default function CatalogPage() {
     return null
   }, [searchQuery, filteredMovies.length, allTitles])
 
-  // Agrupar películas por género para el carousel
-  const moviesByGenre = useMemo(() => {
-    const grouped: { [key: string]: typeof movies } = {}
+  // Función para cargar más películas
+  const loadMoreMovies = useCallback(() => {
+    if (isLoading || displayedMoviesCount >= filteredMovies.length) return
+    
+    setIsLoading(true)
+    
+    // Simular un pequeño delay para una mejor UX
+    setTimeout(() => {
+      setDisplayedMoviesCount(prev => Math.min(prev + 10, filteredMovies.length))
+      setIsLoading(false)
+    }, 300)
+  }, [isLoading, displayedMoviesCount, filteredMovies.length])
 
-    if (searchQuery.trim()) {
-      // Si hay búsqueda, mostrar solo resultados
-      return { "Resultados de búsqueda": filteredMovies }
+  // Configurar Intersection Observer
+  useEffect(() => {
+    if (!loadingRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreMovies()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(loadingRef.current)
+    observerRef.current = observer
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+      }
     }
+  }, [loadMoreMovies])
 
-    if (selectedGenre === "Todos") {
-      // Agrupar por género
-      genres.slice(1).forEach((genre) => {
-        grouped[genre] = movies.filter((movie) => movie.genre === genre)
-      })
-    } else {
-      // Mostrar solo el género seleccionado
-      grouped[selectedGenre] = filteredMovies
-    }
-
-    return grouped
-  }, [selectedGenre, searchQuery, filteredMovies, genres])
+  // Reset del contador cuando cambian los filtros
+  useEffect(() => {
+    setDisplayedMoviesCount(10)
+  }, [selectedGenre, searchQuery])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
     setShowNotFound(false)
+    setDisplayedMoviesCount(10)
 
     // Si hay búsqueda y no hay resultados, mostrar página de error después de un delay
     if (query.trim() && filteredMovies.length === 0) {
@@ -217,11 +258,29 @@ export default function CatalogPage() {
           <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
         )}
 
-        {/* Carousels de películas */}
-        <main className="py-12 space-y-12">
-          {Object.entries(moviesByGenre).map(
-            ([genreName, genreMovies]) =>
-              genreMovies.length > 0 && <MovieCarousel key={genreName} title={genreName} movies={genreMovies} />,
+        {/* Grilla de películas con lazy loading */}
+        <main className="py-12 px-8">
+          {/* Grid responsive de MovieCards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-8">
+            {displayedMovies.map((movie, index) => (
+              <MovieCard key={`${movie.title}-${index}`} movie={movie} />
+            ))}
+          </div>
+
+          {/* Indicador de carga */}
+          {displayedMoviesCount < filteredMovies.length && (
+            <div ref={loadingRef}>
+              {isLoading && <LoadingSpinner />}
+            </div>
+          )}
+
+          {/* Mensaje cuando se han cargado todas */}
+          {displayedMoviesCount >= filteredMovies.length && filteredMovies.length > 10 && (
+            <div className="text-center py-8">
+              <p className="text-gray-400">
+                Has visto todas las {filteredMovies.length} películas disponibles
+              </p>
+            </div>
           )}
         </main>
       </div>
